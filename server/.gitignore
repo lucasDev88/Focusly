@@ -1,1 +1,43 @@
-/node_modules
+# Dependencies
+node_modules/
+.windsurf/
+.claude/
+.agents/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build
+dist/
+.next/
+out/
+
+# Prisma
+prisma/*.db
+prisma/*.db-journal
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Temporary
+*.tmp
+*.temp
