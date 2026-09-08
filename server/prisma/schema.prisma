@@ -17,4 +17,16 @@ model User {
   email     String   @unique
   name      String?
   createdAt DateTime @default(now())
+
+  subjects Subject[]
+}
+
+model Subject {
+  id        Int      @id @default(autoincrement())
+  name      String
+  color     String?
+  createdAt DateTime @default(now())
+
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
