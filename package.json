@@ -1,0 +1,23 @@
+{
+  "name": "focusly",
+  "version": "1.0.0",
+  "description": "O Focusly será uma plataforma de gerenciamento de estudos cujo objetivo é permitir que o usuário:",
+  "homepage": "https://github.com/lucasDev88/Focusly#readme",
+  "bugs": {
+    "url": "https://github.com/lucasDev88/Focusly/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucasDev88/Focusly.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
