@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import prisma from './lib/prisma';
 import userRoutes from './routes/user.routes';
+import subjectRoutes from './routes/subject.routes';
 
 const app = express();
 
@@ -34,5 +35,7 @@ app.get('/health/db', async (req, res) => {
 });
 
 app.use('/users', userRoutes);
+
+app.use('/subjects', subjectRoutes);
 
 export default app;
