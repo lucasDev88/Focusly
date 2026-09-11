@@ -3,49 +3,21 @@ import prisma from "../lib/prisma";
 
 export async function startSession(req: Request, res: Response) {
     try {
-        const { userId, subjectId } = req.body;
+        const { subjectId } = req.body;
+        const userId = req.userId;
 
-        if (
-            typeof userId !== 'number' ||
-            !Number.isInteger(userId) ||
-            userId <= 0
-        ) {
-            return res.status(400).json(
-                {
-                    status: "error",
-                    message: "Valid userId is required."
-                }
-            )
-        }
-
-        if (
-            typeof subjectId !== 'number' ||
-            !Number.isInteger(subjectId) ||
-            subjectId <= 0
-        ) {
-            return res.status(400).json(
-                {
-                    status: "error",
-                    message: "Valid subjectId is required."
-                }
-            )
-        }
-
-        const user = await prisma.user.findUnique({
-            where: { id: userId }
-        })
-
-        if (!user) {
-            return res.status(404).json(
-                {
-                    status: "error",
-                    message: "User not found."
-                }
-            )
+        if (!userId) {
+            return res.status(401).json({
+                status: "error",
+                message: "Authentication required",
+            });
         }
 
         const subject = await prisma.subject.findUnique({
-            where: { id: subjectId }
+            where: { 
+                id: subjectId,
+                userId
+            }
         })
 
         if (!subject) {
@@ -53,15 +25,6 @@ export async function startSession(req: Request, res: Response) {
                 {
                     status: "error",
                     message: "Subject not found."
-                }
-            )
-        }
-
-        if (subject.userId !== userId) {
-            return res.status(400).json(
-                {
-                    status: "error",
-                    message: "Subject does not belong to the user."
                 }
             )
         }
@@ -113,7 +76,14 @@ export async function startSession(req: Request, res: Response) {
 
 export async function pauseSession(req: Request, res: Response) {
     try {
-        console.log("PARAMS: ", req.params)
+        const userId = req.userId;
+
+        if (!userId) {
+            return res.status(401).json({
+                status: "error",
+                message: "Authentication required",
+            });
+        }
 
         const id = Number(req.params.id)
 
@@ -127,7 +97,10 @@ export async function pauseSession(req: Request, res: Response) {
         }
 
         const session = await prisma.studySession.findUnique({
-            where: {id}
+            where: {
+                id,
+                userId
+            }
         })
 
         if (!session) {
@@ -183,6 +156,15 @@ export async function pauseSession(req: Request, res: Response) {
 
 export async function resumeSession(req: Request, res: Response) {
     try {
+        const userId = req.userId;
+
+        if (!userId) {
+            return res.status(401).json({
+                status: "error",
+                message: "Authentication required",
+            });
+        }
+
         const id = Number(req.params.id)
 
         if (!Number.isInteger(id) || id <= 0) {
@@ -195,7 +177,10 @@ export async function resumeSession(req: Request, res: Response) {
         }
 
         const session = await prisma.studySession.findUnique({
-            where: { id },
+            where: { 
+                id,
+                userId
+            },
         })
 
         if (!session) {
@@ -257,6 +242,17 @@ export async function resumeSession(req: Request, res: Response) {
 
 export async function finishSession(req: Request, res: Response) {
     try {
+        const userId = req.userId
+
+        if (!userId) {
+            return res.status(401).json(
+                {
+                    status: "error",
+                    message: "Authentication required."
+                }
+            )
+        }
+
         const id = Number(req.params.id)
 
         if (!Number.isInteger(id) || id <= 0) {
@@ -269,7 +265,10 @@ export async function finishSession(req: Request, res: Response) {
         }
 
         const session = await prisma.studySession.findUnique({
-            where: { id }
+            where: { 
+                id,
+                userId
+            }
         })
 
         if (!session) {
@@ -335,15 +334,13 @@ export async function finishSession(req: Request, res: Response) {
 
 export async function getSessions(req: Request, res: Response) {
     try {
-        const userId = Number(req.query.userId)
+        const userId = req.userId;
 
-        if (!Number.isInteger(userId) || userId <= 0) {
-            return res.status(400).json(
-                {
-                    status: "error",
-                    message: "Valid userId is required"
-                }
-            )
+        if (!userId) {
+            return res.status(401).json({
+                status: "error",
+                message: "Authentication required",
+            });
         }
 
         const sessions = await prisma.studySession.findMany({
@@ -375,13 +372,15 @@ export async function getSessions(req: Request, res: Response) {
 
 export async function getTodaySessions(req: Request, res: Response) {
     try {
-        const userId = Number(req.query.userId);
+        const userId = req.userId
 
-        if (!Number.isInteger(userId) || userId <= 0) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Valid userId is required',
-            });
+        if (!userId) {
+            return res.status(401).json(
+                {
+                    status: "error",
+                    message: "Authentication required"
+                }
+            )
         }
 
         const now = new Date();
@@ -421,13 +420,15 @@ export async function getTodaySessions(req: Request, res: Response) {
 
 export async function getSessionStats(req: Request, res: Response) {
     try {
-        const userId = Number(req.query.userId);
+        const userId = req.userId
 
-        if (!Number.isInteger(userId) || userId <= 0) {
-            return res.status(400).json({
-                status: 'error',
-                message: 'Valid userId is required',
-            });
+        if (!userId) {
+            return res.status(401).json(
+                {
+                    status: "error",
+                    message: "Authentication required"
+                }
+            )
         }
 
         const sessions = await prisma.studySession.findMany({

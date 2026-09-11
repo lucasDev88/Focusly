@@ -9,15 +9,17 @@ import {
     getSessionStats
 } from "../controllers/session.controller"
 
+import { authenticate } from "../middlewares/auth.middleware";
+
 const router = Router();
 
-router.post("/start", startSession)
-router.post("/:id/pause", pauseSession)
-router.post("/:id/resume", resumeSession)
-router.post("/:id/finish", finishSession)
+router.post("/start", authenticate, startSession);
+router.post("/:id/pause", authenticate, pauseSession);
+router.post("/:id/resume", authenticate, resumeSession);
+router.post("/:id/finish", authenticate, finishSession);
 
-router.get("/", getSessions)
-router.get("/today", getTodaySessions)
-router.get("/stats", getSessionStats)
+router.get("/", authenticate, getSessions);
+router.get("/today", authenticate, getTodaySessions);
+router.get("/stats", authenticate, getSessionStats);
 
 export default router;
