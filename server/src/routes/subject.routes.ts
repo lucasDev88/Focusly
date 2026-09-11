@@ -1,18 +1,21 @@
-import { Router } from 'express';
+import { Router } from "express";
+
 import {
     createSubject,
     getUserSubjects,
     getSubjectById,
     updateSubject,
-    deleteSubject
+    deleteSubject,
 } from "../controllers/subject.controller";
+
+import { authenticate } from "../middlewares/auth.middleware";
 
 const router = Router();
 
-router.post('/', createSubject);
-router.get('/:id', getSubjectById);
-router.get('/user/:userId', getUserSubjects);
-router.put('/:id', updateSubject);
-router.delete('/:id', deleteSubject);
+router.post("/", authenticate, createSubject);
+router.get("/", authenticate, getUserSubjects);
+router.get("/:id", authenticate, getSubjectById);
+router.put("/:id", authenticate, updateSubject);
+router.delete("/:id", authenticate, deleteSubject);
 
 export default router;
