@@ -4,6 +4,7 @@ import prisma from './lib/prisma';
 import userRoutes from './routes/user.routes';
 import subjectRoutes from './routes/subject.routes';
 import sessionRoutes from './routes/session.routes'
+import goalRoutes from './routes/goal.routes'
 
 const app = express();
 
@@ -40,5 +41,7 @@ app.use('/users', userRoutes);
 app.use('/subjects', subjectRoutes);
 
 app.use('/sessions', sessionRoutes)
+
+app.use('/goals', goalRoutes)
 
 export default app;

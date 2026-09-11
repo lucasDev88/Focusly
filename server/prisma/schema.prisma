@@ -19,6 +19,12 @@ enum SessionStatus {
   CANCELLED
 }
 
+enum GoalPeriod {
+  DAILY
+  WEEKLY
+  MONTHLY
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -27,6 +33,7 @@ model User {
 
   subjects Subject[]
   sessions StudySession[]
+  goals    Goal[]
 }
 
 model Subject {
@@ -39,6 +46,7 @@ model Subject {
   user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   session StudySession[]
+  goals   Goal[]
 }
 
 model StudySession {
@@ -55,4 +63,22 @@ model StudySession {
 
   user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+}
+
+model Goal {
+  id        Int  @id @default(autoincrement())
+  userId    Int
+  subjectId Int?
+
+  title         String
+  targetMinutes Int
+  period        GoalPeriod
+
+  startDate DateTime
+  endDate   DateTime
+
+  createdAt DateTime @default(now())
+
+  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject Subject? @relation(fields: [subjectId], references: [id])
 }

@@ -222,6 +222,7 @@ export type SubjectWhereInput = {
   userId?: Prisma.IntFilter<"Subject"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   session?: Prisma.StudySessionListRelationFilter
+  goals?: Prisma.GoalListRelationFilter
 }
 
 export type SubjectOrderByWithRelationInput = {
@@ -232,6 +233,7 @@ export type SubjectOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   session?: Prisma.StudySessionOrderByRelationAggregateInput
+  goals?: Prisma.GoalOrderByRelationAggregateInput
 }
 
 export type SubjectWhereUniqueInput = Prisma.AtLeast<{
@@ -245,6 +247,7 @@ export type SubjectWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.IntFilter<"Subject"> | number
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   session?: Prisma.StudySessionListRelationFilter
+  goals?: Prisma.GoalListRelationFilter
 }, "id">
 
 export type SubjectOrderByWithAggregationInput = {
@@ -277,6 +280,7 @@ export type SubjectCreateInput = {
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSubjectsInput
   session?: Prisma.StudySessionCreateNestedManyWithoutSubjectInput
+  goals?: Prisma.GoalCreateNestedManyWithoutSubjectInput
 }
 
 export type SubjectUncheckedCreateInput = {
@@ -286,6 +290,7 @@ export type SubjectUncheckedCreateInput = {
   createdAt?: Date | string
   userId: number
   session?: Prisma.StudySessionUncheckedCreateNestedManyWithoutSubjectInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutSubjectInput
 }
 
 export type SubjectUpdateInput = {
@@ -294,6 +299,7 @@ export type SubjectUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSubjectsNestedInput
   session?: Prisma.StudySessionUpdateManyWithoutSubjectNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutSubjectNestedInput
 }
 
 export type SubjectUncheckedUpdateInput = {
@@ -303,6 +309,7 @@ export type SubjectUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
   session?: Prisma.StudySessionUncheckedUpdateManyWithoutSubjectNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutSubjectNestedInput
 }
 
 export type SubjectCreateManyInput = {
@@ -376,6 +383,11 @@ export type SubjectScalarRelationFilter = {
   isNot?: Prisma.SubjectWhereInput
 }
 
+export type SubjectNullableScalarRelationFilter = {
+  is?: Prisma.SubjectWhereInput | null
+  isNot?: Prisma.SubjectWhereInput | null
+}
+
 export type SubjectCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.SubjectCreateWithoutUserInput, Prisma.SubjectUncheckedCreateWithoutUserInput> | Prisma.SubjectCreateWithoutUserInput[] | Prisma.SubjectUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.SubjectCreateOrConnectWithoutUserInput | Prisma.SubjectCreateOrConnectWithoutUserInput[]
@@ -432,11 +444,28 @@ export type SubjectUpdateOneRequiredWithoutSessionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.SubjectUpdateToOneWithWhereWithoutSessionInput, Prisma.SubjectUpdateWithoutSessionInput>, Prisma.SubjectUncheckedUpdateWithoutSessionInput>
 }
 
+export type SubjectCreateNestedOneWithoutGoalsInput = {
+  create?: Prisma.XOR<Prisma.SubjectCreateWithoutGoalsInput, Prisma.SubjectUncheckedCreateWithoutGoalsInput>
+  connectOrCreate?: Prisma.SubjectCreateOrConnectWithoutGoalsInput
+  connect?: Prisma.SubjectWhereUniqueInput
+}
+
+export type SubjectUpdateOneWithoutGoalsNestedInput = {
+  create?: Prisma.XOR<Prisma.SubjectCreateWithoutGoalsInput, Prisma.SubjectUncheckedCreateWithoutGoalsInput>
+  connectOrCreate?: Prisma.SubjectCreateOrConnectWithoutGoalsInput
+  upsert?: Prisma.SubjectUpsertWithoutGoalsInput
+  disconnect?: Prisma.SubjectWhereInput | boolean
+  delete?: Prisma.SubjectWhereInput | boolean
+  connect?: Prisma.SubjectWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.SubjectUpdateToOneWithWhereWithoutGoalsInput, Prisma.SubjectUpdateWithoutGoalsInput>, Prisma.SubjectUncheckedUpdateWithoutGoalsInput>
+}
+
 export type SubjectCreateWithoutUserInput = {
   name: string
   color?: string | null
   createdAt?: Date | string
   session?: Prisma.StudySessionCreateNestedManyWithoutSubjectInput
+  goals?: Prisma.GoalCreateNestedManyWithoutSubjectInput
 }
 
 export type SubjectUncheckedCreateWithoutUserInput = {
@@ -445,6 +474,7 @@ export type SubjectUncheckedCreateWithoutUserInput = {
   color?: string | null
   createdAt?: Date | string
   session?: Prisma.StudySessionUncheckedCreateNestedManyWithoutSubjectInput
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutSubjectInput
 }
 
 export type SubjectCreateOrConnectWithoutUserInput = {
@@ -489,6 +519,7 @@ export type SubjectCreateWithoutSessionInput = {
   color?: string | null
   createdAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutSubjectsInput
+  goals?: Prisma.GoalCreateNestedManyWithoutSubjectInput
 }
 
 export type SubjectUncheckedCreateWithoutSessionInput = {
@@ -497,6 +528,7 @@ export type SubjectUncheckedCreateWithoutSessionInput = {
   color?: string | null
   createdAt?: Date | string
   userId: number
+  goals?: Prisma.GoalUncheckedCreateNestedManyWithoutSubjectInput
 }
 
 export type SubjectCreateOrConnectWithoutSessionInput = {
@@ -520,6 +552,7 @@ export type SubjectUpdateWithoutSessionInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutSubjectsNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutSubjectNestedInput
 }
 
 export type SubjectUncheckedUpdateWithoutSessionInput = {
@@ -528,6 +561,57 @@ export type SubjectUncheckedUpdateWithoutSessionInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   userId?: Prisma.IntFieldUpdateOperationsInput | number
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutSubjectNestedInput
+}
+
+export type SubjectCreateWithoutGoalsInput = {
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutSubjectsInput
+  session?: Prisma.StudySessionCreateNestedManyWithoutSubjectInput
+}
+
+export type SubjectUncheckedCreateWithoutGoalsInput = {
+  id?: number
+  name: string
+  color?: string | null
+  createdAt?: Date | string
+  userId: number
+  session?: Prisma.StudySessionUncheckedCreateNestedManyWithoutSubjectInput
+}
+
+export type SubjectCreateOrConnectWithoutGoalsInput = {
+  where: Prisma.SubjectWhereUniqueInput
+  create: Prisma.XOR<Prisma.SubjectCreateWithoutGoalsInput, Prisma.SubjectUncheckedCreateWithoutGoalsInput>
+}
+
+export type SubjectUpsertWithoutGoalsInput = {
+  update: Prisma.XOR<Prisma.SubjectUpdateWithoutGoalsInput, Prisma.SubjectUncheckedUpdateWithoutGoalsInput>
+  create: Prisma.XOR<Prisma.SubjectCreateWithoutGoalsInput, Prisma.SubjectUncheckedCreateWithoutGoalsInput>
+  where?: Prisma.SubjectWhereInput
+}
+
+export type SubjectUpdateToOneWithWhereWithoutGoalsInput = {
+  where?: Prisma.SubjectWhereInput
+  data: Prisma.XOR<Prisma.SubjectUpdateWithoutGoalsInput, Prisma.SubjectUncheckedUpdateWithoutGoalsInput>
+}
+
+export type SubjectUpdateWithoutGoalsInput = {
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutSubjectsNestedInput
+  session?: Prisma.StudySessionUpdateManyWithoutSubjectNestedInput
+}
+
+export type SubjectUncheckedUpdateWithoutGoalsInput = {
+  id?: Prisma.IntFieldUpdateOperationsInput | number
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  session?: Prisma.StudySessionUncheckedUpdateManyWithoutSubjectNestedInput
 }
 
 export type SubjectCreateManyUserInput = {
@@ -542,6 +626,7 @@ export type SubjectUpdateWithoutUserInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   session?: Prisma.StudySessionUpdateManyWithoutSubjectNestedInput
+  goals?: Prisma.GoalUpdateManyWithoutSubjectNestedInput
 }
 
 export type SubjectUncheckedUpdateWithoutUserInput = {
@@ -550,6 +635,7 @@ export type SubjectUncheckedUpdateWithoutUserInput = {
   color?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   session?: Prisma.StudySessionUncheckedUpdateManyWithoutSubjectNestedInput
+  goals?: Prisma.GoalUncheckedUpdateManyWithoutSubjectNestedInput
 }
 
 export type SubjectUncheckedUpdateManyWithoutUserInput = {
@@ -566,10 +652,12 @@ export type SubjectUncheckedUpdateManyWithoutUserInput = {
 
 export type SubjectCountOutputType = {
   session: number
+  goals: number
 }
 
 export type SubjectCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   session?: boolean | SubjectCountOutputTypeCountSessionArgs
+  goals?: boolean | SubjectCountOutputTypeCountGoalsArgs
 }
 
 /**
@@ -589,6 +677,13 @@ export type SubjectCountOutputTypeCountSessionArgs<ExtArgs extends runtime.Types
   where?: Prisma.StudySessionWhereInput
 }
 
+/**
+ * SubjectCountOutputType without action
+ */
+export type SubjectCountOutputTypeCountGoalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.GoalWhereInput
+}
+
 
 export type SubjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -598,6 +693,7 @@ export type SubjectSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   userId?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   session?: boolean | Prisma.Subject$sessionArgs<ExtArgs>
+  goals?: boolean | Prisma.Subject$goalsArgs<ExtArgs>
   _count?: boolean | Prisma.SubjectCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["subject"]>
 
@@ -631,6 +727,7 @@ export type SubjectOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type SubjectInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   session?: boolean | Prisma.Subject$sessionArgs<ExtArgs>
+  goals?: boolean | Prisma.Subject$goalsArgs<ExtArgs>
   _count?: boolean | Prisma.SubjectCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type SubjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -645,6 +742,7 @@ export type $SubjectPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     session: Prisma.$StudySessionPayload<ExtArgs>[]
+    goals: Prisma.$GoalPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
@@ -1048,6 +1146,7 @@ export interface Prisma__SubjectClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   session<T extends Prisma.Subject$sessionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subject$sessionArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StudySessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  goals<T extends Prisma.Subject$goalsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Subject$goalsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$GoalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1504,6 +1603,30 @@ export type Subject$sessionArgs<ExtArgs extends runtime.Types.Extensions.Interna
   take?: number
   skip?: number
   distinct?: Prisma.StudySessionScalarFieldEnum | Prisma.StudySessionScalarFieldEnum[]
+}
+
+/**
+ * Subject.goals
+ */
+export type Subject$goalsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Goal
+   */
+  select?: Prisma.GoalSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Goal
+   */
+  omit?: Prisma.GoalOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.GoalInclude<ExtArgs> | null
+  where?: Prisma.GoalWhereInput
+  orderBy?: Prisma.GoalOrderByWithRelationInput | Prisma.GoalOrderByWithRelationInput[]
+  cursor?: Prisma.GoalWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.GoalScalarFieldEnum | Prisma.GoalScalarFieldEnum[]
 }
 
 /**

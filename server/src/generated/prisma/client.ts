@@ -54,3 +54,8 @@ export type Subject = Prisma.SubjectModel
  * 
  */
 export type StudySession = Prisma.StudySessionModel
+/**
+ * Model Goal
+ * 
+ */
+export type Goal = Prisma.GoalModel
