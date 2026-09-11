@@ -218,7 +218,7 @@ export type GoalGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type GoalGroupByOutputType = {
   id: number
   userId: number
-  subjectId: number
+  subjectId: number | null
   title: string
   targetMinutes: number
   period: $Enums.GoalPeriod
@@ -253,7 +253,7 @@ export type GoalWhereInput = {
   NOT?: Prisma.GoalWhereInput | Prisma.GoalWhereInput[]
   id?: Prisma.IntFilter<"Goal"> | number
   userId?: Prisma.IntFilter<"Goal"> | number
-  subjectId?: Prisma.IntFilter<"Goal"> | number
+  subjectId?: Prisma.IntNullableFilter<"Goal"> | number | null
   title?: Prisma.StringFilter<"Goal"> | string
   targetMinutes?: Prisma.IntFilter<"Goal"> | number
   period?: Prisma.EnumGoalPeriodFilter<"Goal"> | $Enums.GoalPeriod
@@ -267,7 +267,7 @@ export type GoalWhereInput = {
 export type GoalOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  subjectId?: Prisma.SortOrder
+  subjectId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   targetMinutes?: Prisma.SortOrder
   period?: Prisma.SortOrder
@@ -284,7 +284,7 @@ export type GoalWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.GoalWhereInput[]
   NOT?: Prisma.GoalWhereInput | Prisma.GoalWhereInput[]
   userId?: Prisma.IntFilter<"Goal"> | number
-  subjectId?: Prisma.IntFilter<"Goal"> | number
+  subjectId?: Prisma.IntNullableFilter<"Goal"> | number | null
   title?: Prisma.StringFilter<"Goal"> | string
   targetMinutes?: Prisma.IntFilter<"Goal"> | number
   period?: Prisma.EnumGoalPeriodFilter<"Goal"> | $Enums.GoalPeriod
@@ -298,7 +298,7 @@ export type GoalWhereUniqueInput = Prisma.AtLeast<{
 export type GoalOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   userId?: Prisma.SortOrder
-  subjectId?: Prisma.SortOrder
+  subjectId?: Prisma.SortOrderInput | Prisma.SortOrder
   title?: Prisma.SortOrder
   targetMinutes?: Prisma.SortOrder
   period?: Prisma.SortOrder
@@ -318,7 +318,7 @@ export type GoalScalarWhereWithAggregatesInput = {
   NOT?: Prisma.GoalScalarWhereWithAggregatesInput | Prisma.GoalScalarWhereWithAggregatesInput[]
   id?: Prisma.IntWithAggregatesFilter<"Goal"> | number
   userId?: Prisma.IntWithAggregatesFilter<"Goal"> | number
-  subjectId?: Prisma.IntWithAggregatesFilter<"Goal"> | number
+  subjectId?: Prisma.IntNullableWithAggregatesFilter<"Goal"> | number | null
   title?: Prisma.StringWithAggregatesFilter<"Goal"> | string
   targetMinutes?: Prisma.IntWithAggregatesFilter<"Goal"> | number
   period?: Prisma.EnumGoalPeriodWithAggregatesFilter<"Goal"> | $Enums.GoalPeriod
@@ -341,7 +341,7 @@ export type GoalCreateInput = {
 export type GoalUncheckedCreateInput = {
   id?: number
   userId: number
-  subjectId: number
+  subjectId?: number | null
   title: string
   targetMinutes: number
   period: $Enums.GoalPeriod
@@ -364,7 +364,7 @@ export type GoalUpdateInput = {
 export type GoalUncheckedUpdateInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  subjectId?: Prisma.IntFieldUpdateOperationsInput | number
+  subjectId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   targetMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   period?: Prisma.EnumGoalPeriodFieldUpdateOperationsInput | $Enums.GoalPeriod
@@ -376,7 +376,7 @@ export type GoalUncheckedUpdateInput = {
 export type GoalCreateManyInput = {
   id?: number
   userId: number
-  subjectId: number
+  subjectId?: number | null
   title: string
   targetMinutes: number
   period: $Enums.GoalPeriod
@@ -397,7 +397,7 @@ export type GoalUpdateManyMutationInput = {
 export type GoalUncheckedUpdateManyInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   userId?: Prisma.IntFieldUpdateOperationsInput | number
-  subjectId?: Prisma.IntFieldUpdateOperationsInput | number
+  subjectId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   targetMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   period?: Prisma.EnumGoalPeriodFieldUpdateOperationsInput | $Enums.GoalPeriod
@@ -566,7 +566,7 @@ export type GoalCreateWithoutUserInput = {
 
 export type GoalUncheckedCreateWithoutUserInput = {
   id?: number
-  subjectId: number
+  subjectId?: number | null
   title: string
   targetMinutes: number
   period: $Enums.GoalPeriod
@@ -607,7 +607,7 @@ export type GoalScalarWhereInput = {
   NOT?: Prisma.GoalScalarWhereInput | Prisma.GoalScalarWhereInput[]
   id?: Prisma.IntFilter<"Goal"> | number
   userId?: Prisma.IntFilter<"Goal"> | number
-  subjectId?: Prisma.IntFilter<"Goal"> | number
+  subjectId?: Prisma.IntNullableFilter<"Goal"> | number | null
   title?: Prisma.StringFilter<"Goal"> | string
   targetMinutes?: Prisma.IntFilter<"Goal"> | number
   period?: Prisma.EnumGoalPeriodFilter<"Goal"> | $Enums.GoalPeriod
@@ -665,7 +665,7 @@ export type GoalUpdateManyWithWhereWithoutSubjectInput = {
 
 export type GoalCreateManyUserInput = {
   id?: number
-  subjectId: number
+  subjectId?: number | null
   title: string
   targetMinutes: number
   period: $Enums.GoalPeriod
@@ -686,7 +686,7 @@ export type GoalUpdateWithoutUserInput = {
 
 export type GoalUncheckedUpdateWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  subjectId?: Prisma.IntFieldUpdateOperationsInput | number
+  subjectId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   targetMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   period?: Prisma.EnumGoalPeriodFieldUpdateOperationsInput | $Enums.GoalPeriod
@@ -697,7 +697,7 @@ export type GoalUncheckedUpdateWithoutUserInput = {
 
 export type GoalUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
-  subjectId?: Prisma.IntFieldUpdateOperationsInput | number
+  subjectId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   title?: Prisma.StringFieldUpdateOperationsInput | string
   targetMinutes?: Prisma.IntFieldUpdateOperationsInput | number
   period?: Prisma.EnumGoalPeriodFieldUpdateOperationsInput | $Enums.GoalPeriod
@@ -828,7 +828,7 @@ export type $GoalPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: number
     userId: number
-    subjectId: number
+    subjectId: number | null
     title: string
     targetMinutes: number
     period: $Enums.GoalPeriod
