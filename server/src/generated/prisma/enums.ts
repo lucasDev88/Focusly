@@ -9,7 +9,11 @@
 * 🟢 You can import this file directly.
 */
 
+export const SessionStatus = {
+  ACTIVE: 'ACTIVE',
+  PAUSED: 'PAUSED',
+  COMPLETED: 'COMPLETED',
+  CANCELLED: 'CANCELLED'
+} as const
 
-
-// This file is empty because there are no enums in the schema.
-export {}
+export type SessionStatus = (typeof SessionStatus)[keyof typeof SessionStatus]

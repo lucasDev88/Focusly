@@ -12,6 +12,13 @@ datasource db {
   provider = "postgresql"
 }
 
+enum SessionStatus {
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
 model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
@@ -19,6 +26,7 @@ model User {
   createdAt DateTime @default(now())
 
   subjects Subject[]
+  sessions StudySession[]
 }
 
 model Subject {
@@ -27,6 +35,24 @@ model Subject {
   color     String?
   createdAt DateTime @default(now())
 
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  session StudySession[]
+}
+
+model StudySession {
+  id Int @id @default(autoincrement())
+
   userId    Int
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subjectId Int
+
+  startedAt DateTime      @default(now())
+  endedAt   DateTime?
+  pausedAt  DateTime?
+  duration  Int?
+  status    SessionStatus @default(ACTIVE)
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
 }

@@ -27,3 +27,8 @@ export type User = Prisma.UserModel
  * 
  */
 export type Subject = Prisma.SubjectModel
+/**
+ * Model StudySession
+ * 
+ */
+export type StudySession = Prisma.StudySessionModel
