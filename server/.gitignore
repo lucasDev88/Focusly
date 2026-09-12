@@ -17,6 +17,7 @@ out/
 # Prisma
 prisma/*.db
 prisma/*.db-journal
+src/generated/prisma/
 
 # Logs
 *.log
