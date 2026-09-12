@@ -177,7 +177,7 @@ export const getGoalById = async (req: Request, res: Response) => {
       });
     }
 
-    return res.json({
+    return res.status(200).json({
       status: "success",
       goal,
     });
@@ -336,7 +336,7 @@ export const updateGoal = async (req: Request, res: Response) => {
       data,
     });
 
-    return res.json({
+    return res.status(200).json({
       status: "success",
       goal,
     });
@@ -390,7 +390,7 @@ export const deleteGoal = async (req: Request, res: Response) => {
       where: { id },
     });
 
-    return res.json({
+    return res.status(200).json({
       status: "success",
       message: "Goal deleted successfully.",
     });
@@ -472,7 +472,7 @@ export const getGoalProgress = async (req: Request, res: Response) => {
             100
         );
 
-        return res.json({
+        return res.status(200).json({
             status: 'success',
             progress: {
                 targetMinutes: goal.targetMinutes,
