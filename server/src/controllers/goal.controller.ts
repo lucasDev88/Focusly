@@ -5,7 +5,6 @@ import { Prisma } from "../generated/prisma/client";
 export async function createGoal(req: Request, res: Response) {
   try {
     const {
-      userId,
       subjectId,
       title,
       targetMinutes,
@@ -14,9 +13,18 @@ export async function createGoal(req: Request, res: Response) {
       endDate,
     } = req.body;
 
+    const userId = req.userId
+
+    if (!userId) {
+      return res.status(401).json(
+        {
+          status: "error",
+          message: "Authentication required."
+        }
+      )
+    }
+
     if (
-      !Number.isInteger(userId) ||
-      userId <= 0 ||
       !title ||
       !Number.isInteger(targetMinutes) ||
       !["DAILY", "WEEKLY", "MONTHLY"].includes(period) ||
@@ -29,17 +37,6 @@ export async function createGoal(req: Request, res: Response) {
       });
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: userId },
-    });
-
-    if (!user) {
-      return res.status(404).json({
-        status: "error",
-        message: "User not found",
-      });
-    }
-
     if (subjectId !== undefined && subjectId !== null) {
       if (!Number.isInteger(subjectId) || subjectId <= 0) {
         return res.status(400).json({
@@ -49,22 +46,20 @@ export async function createGoal(req: Request, res: Response) {
       }
     }
 
-    const subject = await prisma.subject.findUnique({
-      where: { id: subjectId },
+    if (subjectId !== undefined && subjectId !== null) {
+      const subject = await prisma.subject.findFirst({
+      where: {
+        id: subjectId,
+        userId,
+      },
     });
 
     if (!subject) {
       return res.status(404).json({
-        status: "error",
-        message: "Subject not found",
-      });
-    }
-
-    if (subject.userId !== userId) {
-      return res.status(403).json({
-        status: "error",
-        message: "Subject does not belong to user.",
-      });
+          status: "error",
+          message: "Subject not found",
+        });
+      }
     }
 
     const parsedStartDate = new Date(startDate);
@@ -109,17 +104,19 @@ export async function createGoal(req: Request, res: Response) {
 
 export async function getUserGoals(req: Request, res: Response) {
   try {
-    const userId = Number(req.params.userId);
+    const userId = req.userId
 
-    if (!Number.isInteger(userId) || userId <= 0) {
-      return res.status(400).json({
-        status: "error",
-        message: "Invalid userId",
-      });
+    if (!userId) {
+      return res.status(401).json(
+        {
+          status: "error",
+          message: "Authentication required."
+        }
+      )
     }
 
     const goals = await prisma.goal.findMany({
-      where: { userId: userId },
+      where: { userId },
       include: {
         subject: true,
       },
@@ -145,20 +142,33 @@ export async function getUserGoals(req: Request, res: Response) {
 export const getGoalById = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
-
+    
     if (!Number.isInteger(id) || id <= 0) {
       return res.status(400).json({
         status: "error",
         message: "Invalid goal id.",
       });
     }
+    const userId = req.userId
 
-    const goal = await prisma.goal.findUnique({
-      where: { id },
-      include: {
-        subject: true,
+    if (!userId) {
+      return res.status(401).json(
+        {
+          status: "error",
+          message: "Authentication required"
+        }
+      )
+    }
+    
+    const goal = await prisma.goal.findFirst({
+      where: {
+        id,
+        userId
       },
-    });
+      include: {
+        subject: true
+      }
+    })
 
     if (!goal) {
       return res.status(404).json({
@@ -192,8 +202,22 @@ export const updateGoal = async (req: Request, res: Response) => {
       });
     }
 
+    const userId = req.userId
+
+    if (!userId) {
+      return res.status(401).json(
+        {
+          status: "error",
+          message: "Authentication required"
+        }
+      )
+    }
+
     const existingGoal = await prisma.goal.findUnique({
-      where: { id },
+      where: {
+          id,
+          userId
+        },
     });
 
     if (!existingGoal) {
@@ -251,20 +275,16 @@ export const updateGoal = async (req: Request, res: Response) => {
         }
 
         const subject = await prisma.subject.findUnique({
-          where: { id: subjectId },
+          where: {
+            id: subjectId,
+            userId
+          },
         });
 
         if (!subject) {
           return res.status(404).json({
             status: "error",
             message: "Subject not found.",
-          });
-        }
-
-        if (subject.userId !== existingGoal.userId) {
-          return res.status(403).json({
-            status: "error",
-            message: "Subject does not belong to user.",
           });
         }
       }
@@ -341,8 +361,22 @@ export const deleteGoal = async (req: Request, res: Response) => {
       });
     }
 
+    const userId = req.userId
+
+    if (!userId) {
+      return res.status(401).json(
+        {
+          status: "error",
+          message: "Authentication required"
+        }
+      )
+    }
+
     const goal = await prisma.goal.findUnique({
-      where: { id },
+      where: {
+        id,
+        userId
+      },
     });
 
     if (!goal) {
@@ -381,8 +415,22 @@ export const getGoalProgress = async (req: Request, res: Response) => {
             });
         }
 
+        const userId = req.userId
+
+        if (!userId) {
+          return res.status(401).json(
+            {
+              status: "error",
+              message: "Authentication required"
+            }
+          )
+        }
+
         const goal = await prisma.goal.findUnique({
-            where: { id },
+            where: {
+              id,
+              userId
+            },
         });
 
         if (!goal) {

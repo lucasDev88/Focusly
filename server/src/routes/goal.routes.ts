@@ -9,13 +9,15 @@ import {
     getGoalProgress,
 } from '../controllers/goal.controller';
 
+import { authenticate } from '../middlewares/auth.middleware';
+
 const router = Router();
 
-router.post('/', createGoal);
-router.get('/user/:userId', getUserGoals);
-router.get('/:id/progress', getGoalProgress);
-router.get('/:id', getGoalById);
-router.put('/:id', updateGoal);
-router.delete('/:id', deleteGoal);
+router.post('/', authenticate, createGoal);
+router.get('/', authenticate, getUserGoals);
+router.get('/:id/progress', authenticate, getGoalProgress);
+router.get('/:id', authenticate, getGoalById);
+router.put('/:id', authenticate, updateGoal);
+router.delete('/:id', authenticate, deleteGoal);
 
 export default router;
