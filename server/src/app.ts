@@ -2,7 +2,6 @@ import express from 'express';
 import cors from 'cors';
 import prisma from './lib/prisma';
 import cookieParser from "cookie-parser"
-import userRoutes from './routes/user.routes';
 import subjectRoutes from './routes/subject.routes';
 import sessionRoutes from './routes/session.routes'
 import goalRoutes from './routes/goal.routes'
@@ -38,8 +37,6 @@ app.get('/health/db', async (req, res) => {
         });
     }
 });
-
-app.use('/users', userRoutes);
 
 app.use('/subjects', subjectRoutes);
 
