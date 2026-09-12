@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken"
+import { env } from "../config/env";
 
 interface AuthTokenPayLoad {
     userId: number;
@@ -24,7 +25,7 @@ export function authenticate(
 
         const decoded = jwt.verify(
             token,
-            process.env.JWT_SECRET!
+            env.JWT_SECRET
         ) as AuthTokenPayLoad;
 
         if (!decoded.userId) {
