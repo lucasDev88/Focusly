@@ -136,7 +136,7 @@ export async function pauseSession(req: Request, res: Response) {
             }
         })
 
-        return res.status(201).json(
+        return res.status(200).json(
             {
                 status: "ok",
                 updateSession
@@ -222,7 +222,7 @@ export async function resumeSession(req: Request, res: Response) {
             }
         })
 
-        return res.status(201).json(
+        return res.status(200).json(
             {
                 status: "ok",
                 session: updatedSession
@@ -314,7 +314,7 @@ export async function finishSession(req: Request, res: Response) {
             }
         })
 
-        return res.status(201).json(
+        return res.status(200).json(
             {
                 status: "ok",
                 session: updateSession
@@ -352,7 +352,7 @@ export async function getSessions(req: Request, res: Response) {
             }
         })
 
-        return res.status(201).json(
+        return res.status(200).json(
             {
                 status: "ok",
                 sessions
