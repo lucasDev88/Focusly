@@ -3,6 +3,12 @@ import jwt from 'jsonwebtoken';
 import prisma from "../lib/prisma"
 import bcrypt from "bcrypt"
 
+const MIN_PASSWORD_LENGTH = 8;
+
+function normalizeEmail(email: string): string {
+    return email.trim().toLowerCase();
+}
+
 export async function register(req: Request, res: Response) {
     try {
         const { email, name, password } = req.body
@@ -25,8 +31,28 @@ export async function register(req: Request, res: Response) {
             );
         }
 
+        const normalizedEmail = normalizeEmail(email)
+
+        if (!normalizedEmail) {
+            return res.status(400).json(
+                {
+                    status: "error",
+                    message: "Email is required"
+                }
+            )
+        }
+
+        if (password.length < MIN_PASSWORD_LENGTH) {
+            return res.status(400).json(
+                {
+                    status: "error",
+                    message: "Password must be at least 8 characters long"
+                }
+            )
+        }
+
         const existingUser = await prisma.user.findUnique({
-            where: { email: email }
+            where: { email: normalizedEmail }
         });
 
         if (existingUser) {
@@ -42,7 +68,7 @@ export async function register(req: Request, res: Response) {
 
         const user = await prisma.user.create({
             data: {
-                email,
+                email: normalizedEmail,
                 name: name ?? null,
                 password: passwordHash
             },
@@ -95,12 +121,14 @@ export async function login(req: Request, res: Response) {
             );
         }
 
+        const normalizedEmail = normalizeEmail(email);
+
         const user = await prisma.user.findUnique({
-            where: { email },
+            where: { email: normalizedEmail },
         })
 
         if (!user) {
-            return res.status(404).json(
+            return res.status(401).json(
                 {
                     status: "error",
                     message: "Invalid email or password"
