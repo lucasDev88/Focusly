@@ -164,7 +164,7 @@ export async function login(req: Request, res: Response) {
                 sameSite: 'lax',
                 maxAge: 7 * 24 * 60 * 60 * 1000,
             })
-            .status(201)
+            .status(200)
             .json(
                 {
                     status: "sucess",
@@ -218,7 +218,7 @@ export async function getMe(req: Request, res: Response) {
             );
         }
 
-        return res.status(201).json(
+        return res.status(200).json(
             {
                 status: "ok",
                 user
