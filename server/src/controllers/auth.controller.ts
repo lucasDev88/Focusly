@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import jwt from 'jsonwebtoken';
 import prisma from "../lib/prisma"
 import bcrypt from "bcrypt"
+import { env } from "../config/env";
 
 const MIN_PASSWORD_LENGTH = 8;
 
@@ -151,7 +152,7 @@ export async function login(req: Request, res: Response) {
             {
                 userId: user.id,
             },
-            process.env.JWT_SECRET!,
+            env.JWT_SECRET,
             {
                 expiresIn: "7d"
             }
