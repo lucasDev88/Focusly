@@ -83,7 +83,7 @@ export async function register(req: Request, res: Response) {
 
         return res.status(201).json(
             {
-                status: "sucess",
+                status: "ok",
                 user
             }
         )
@@ -168,7 +168,7 @@ export async function login(req: Request, res: Response) {
             .status(200)
             .json(
                 {
-                    status: "sucess",
+                    status: "ok",
                     user: {
                         userId: user.id,
                         email: user.email,
@@ -246,7 +246,7 @@ export const logout = (req: Request, res: Response) => {
         })
         .json(
             {
-                status: "sucess",
+                status: "ok",
                 message: "Logged out successfuly"
             }
         )

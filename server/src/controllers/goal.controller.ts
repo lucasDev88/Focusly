@@ -178,7 +178,7 @@ export const getGoalById = async (req: Request, res: Response) => {
     }
 
     return res.status(200).json({
-      status: "success",
+      status: "ok",
       goal,
     });
   } catch (error) {
@@ -337,7 +337,7 @@ export const updateGoal = async (req: Request, res: Response) => {
     });
 
     return res.status(200).json({
-      status: "success",
+      status: "ok",
       goal,
     });
   } catch (error) {
@@ -391,7 +391,7 @@ export const deleteGoal = async (req: Request, res: Response) => {
     });
 
     return res.status(200).json({
-      status: "success",
+      status: "ok",
       message: "Goal deleted successfully.",
     });
   } catch (error) {
