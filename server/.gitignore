@@ -6,6 +6,7 @@ node_modules/
 
 # Environment variables
 .env
+.env.test
 .env.local
 .env.*.local
 
@@ -41,4 +42,4 @@ venv/
 
 # Temporary
 *.tmp
-*.temp
+*.temp.env.test
