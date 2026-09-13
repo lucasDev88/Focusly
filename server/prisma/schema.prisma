@@ -81,5 +81,5 @@ model Goal {
   createdAt DateTime @default(now())
 
   user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  subject Subject? @relation(fields: [subjectId], references: [id])
+  subject Subject? @relation(fields: [subjectId], references: [id], onDelete: SetNull)
 }
