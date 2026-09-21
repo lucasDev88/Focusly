@@ -148,6 +148,107 @@ describe('Subjects', () => {
     expect(deleteResponse.status).toBe(404);
     expect(deleteResponse.body.status).toBe('error');
   });
+  it('should reject subject creation without a name', async () => {
+  const response = await agent
+    .post('/subjects')
+    .send({
+      color: '#3B82F6',
+    });
+
+  expect(response.status).toBe(400);
+  expect(response.body.status).toBe('error');
+});
+
+  it('should reject subject creation with an empty name', async () => {
+    const response = await agent
+      .post('/subjects')
+      .send({
+        name: '   ',
+        color: '#3B82F6',
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.status).toBe('error');
+  });
+
+  it('should trim the subject name', async () => {
+    const response = await agent
+      .post('/subjects')
+      .send({
+        name: '   Física   ',
+        color: '#EF4444',
+      });
+
+    expect(response.status).toBe(201);
+    expect(response.body.status).toBe('ok');
+    expect(response.body.subject.name).toBe('Física');
+
+    await agent.delete(`/subjects/${response.body.subject.id}`);
+  });
+
+  it('should reject subject update with an empty name', async () => {
+    const response = await agent
+      .put(`/subjects/${subjectId}`)
+      .send({
+        name: '   ',
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.status).toBe('error');
+  });
+
+  it('should reject subject update with a non-string name', async () => {
+    const response = await agent
+      .put(`/subjects/${subjectId}`)
+      .send({
+        name: 123,
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.status).toBe('error');
+  });
+
+  it('should reject subject update with a non-string color', async () => {
+    const response = await agent
+      .put(`/subjects/${subjectId}`)
+      .send({
+        color: 123,
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.status).toBe('error');
+  });
+
+  it('should reject invalid subject ids', async () => {
+    const invalidIds = ['0', '-1', 'abc', '1.5'];
+
+    for (const id of invalidIds) {
+      const response = await agent
+        .get(`/subjects/${id}`);
+
+      expect(response.status).toBe(400);
+      expect(response.body.status).toBe('error');
+    }
+  });
+
+  it('should reject invalid subject ids when updating', async () => {
+    const response = await agent
+      .put('/subjects/abc')
+      .send({
+        name: 'Teste',
+      });
+
+    expect(response.status).toBe(400);
+    expect(response.body.status).toBe('error');
+  });
+
+  it('should reject invalid subject ids when deleting', async () => {
+    const response = await agent
+      .delete('/subjects/abc');
+
+    expect(response.status).toBe(400);
+    expect(response.body.status).toBe('error');
+  });
 
   it('should delete a subject', async () => {
     const response = await agent.delete(`/subjects/${subjectId}`);
@@ -162,4 +263,5 @@ describe('Subjects', () => {
     expect(response.status).toBe(404);
     expect(response.body.status).toBe('error');
   });
+
 });
